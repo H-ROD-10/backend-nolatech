@@ -269,7 +269,7 @@ router
   .route("/user/update-role")
   .patch(
     isAuthenticated,
-    authorizeRoles("admin", "editor", "user"),
+    authorizeRoles("admin"),
     validateUpdateUser,
     userController.updateRoleUser
   );
@@ -279,7 +279,7 @@ router
   .delete(
     isAuthenticated,
     validateDeleteUser,
-    authorizeRoles("admin", "editor"),
+    authorizeRoles("admin"),
     userController.delete
   );
 

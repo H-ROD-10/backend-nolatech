@@ -27,7 +27,6 @@ export const userController = {
 
   delete: async (req, res, next) => {
     const { _id } = req.params;
-    console.log(_id);
     return await userServices.deleteUser(res, _id);
   },
   logout: async (req, res, next) => {

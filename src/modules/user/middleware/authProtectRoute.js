@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import { userServices } from "../services/user.services.js";
+import { ErrorHandler } from "../../../utils/errorHandler.js";
 
 //Checks if user is authenticated or not
 export const isAuthenticated = async (req, res, next) => {
   const token = await req.headers.authorization?.split(" ")[1];
 
   if (!token || token === undefined) {
-    next(new Error("debes autenticarte para acceder a este recurso"));
+    next(new ErrorHandler("debes autenticarte para acceder a este recurso"));
   }
 
   try {
@@ -17,7 +18,7 @@ export const isAuthenticated = async (req, res, next) => {
     req.user = user;
 
     if (!user) {
-      next(new Error("Token no valido"));
+      next(new ErrorHandler("Token no valido"));
     }
 
     next();
@@ -34,7 +35,7 @@ export const isAuthenticated = async (req, res, next) => {
 export const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new Error("No tienes permisos para acceder a este recurso"));
+      return next(new ErrorHandler("role"));
     }
 
     next();

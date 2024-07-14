@@ -14,7 +14,7 @@ export const loginSchema = Joi.object({
 
 export const updateRoleSchema = Joi.object({
   _id: Joi.string().required(),
-  role: Joi.string().valid("user", "editor").required(),
+  role: Joi.string().valid("user", "editor", "admin").required(),
 });
 
 export const deleteSchema = Joi.object({
