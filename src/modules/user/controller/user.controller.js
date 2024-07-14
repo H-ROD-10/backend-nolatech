@@ -25,6 +25,17 @@ export const userController = {
     return await userServices.updateRoleUser(res, _id, role);
   },
 
+  updateMyUser: async (req, res, next) => {
+    const { username, email, password } = req.body;
+    return await userServices.updateUser(
+      res,
+      req.user.id,
+      username,
+      email,
+      password
+    );
+  },
+
   delete: async (req, res, next) => {
     const { _id } = req.params;
     return await userServices.deleteUser(res, _id);

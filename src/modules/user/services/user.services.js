@@ -119,6 +119,23 @@ export const userServices = {
     }
   },
 
+  updateUser: async (res, _id, username, email, password) => {
+    try {
+      const user = await userRepository.update(_id, username, email, password);
+      res.status(200).json({
+        success: true,
+        message: "Usuario actualizado correctamente",
+        data: user,
+      });
+    } catch (error) {
+      res.status(401).json({
+        success: false,
+        message: error.message,
+        data: null,
+      });
+    }
+  },
+
   deleteUser: async (res, _id) => {
     try {
       const { deleteUser } = await userRepository.deleteUser(_id);

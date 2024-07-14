@@ -48,6 +48,16 @@ export const userRepository = {
       updateUser,
     };
   },
+  update: async (_id, username, email, password) => {
+    const updateUser = await User.findByIdAndUpdate(
+      { _id },
+      { $set: { username, email, password } },
+      { new: true }
+    );
+    return {
+      updateUser,
+    };
+  },
 
   deleteUser: async (_id) => {
     const deleteUser = await User.findByIdAndDelete({ _id });

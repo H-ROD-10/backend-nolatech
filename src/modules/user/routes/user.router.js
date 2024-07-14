@@ -54,7 +54,7 @@
  *         - _id
  *         - role
  *       properties:
- *         userId:
+ *         _id:
  *           type: string
  *           description: The id of the user
  *         role:
@@ -63,6 +63,29 @@
  *       example:
  *         _id: "123456"
  *         role: editor
+ *  @swagger
+ * components:
+ *   schemas:
+ *     UpdateMyUser:
+ *       type: object
+ *       optional:
+ *         - email
+ *         - username
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: The email of the user
+ *         username:
+ *           type: string
+ *           description: The username of the user
+ *         password:
+ *           type: string
+ *           description: The password 8 characters of the user
+ *       example:
+ *         email: VnI8k@example.com
+ *         username: alex
+ *         password: "12345678"
  * @swagger
  * components:
  *   schemas:
@@ -209,6 +232,34 @@
  *                   role: admin
  *                   createdAt: 2022-10-11T14:20:09.000Z
  *                   createdUp: 2022-10-11T14:20:09.000Z
+ *   /user/update-my-user:
+ *     patch:
+ *       summary: Update my user
+ *       security:
+ *         - BearerAuth:
+ *            type: http
+ *            scheme: bearer
+ *       tags: [User]
+ *       requestBody:
+ *         required: false
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UpdateMyUser'
+ *       responses:
+ *         200:
+ *           description: OK
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   _id: 123456
+ *                   username: alex
+ *                   email: VnI8k@example.com
+ *                   role: admin
+ *                   createdAt: 2022-10-11T14:20:09.000Z
+ *                   createdUp: 2022-10-11T14:20:09.000Z
  *   /user/delete/{_id}:
  *     delete:
  *       summary: Delete user role admin or editor
@@ -241,8 +292,9 @@ import { userController } from "../controller/user.controller.js";
 import {
   validateDeleteUser,
   validateLogin,
+  validateMyUserUpdate,
   validateSignup,
-  validateUpdateUser,
+  validateUpdateRoleUser,
 } from "../validations/validateUser.js";
 import {
   authorizeRoles,
@@ -270,9 +322,13 @@ router
   .patch(
     isAuthenticated,
     authorizeRoles("admin"),
-    validateUpdateUser,
+    validateUpdateRoleUser,
     userController.updateRoleUser
   );
+
+router
+  .route("/user/update-my-user")
+  .patch(isAuthenticated, validateMyUserUpdate, userController.updateMyUser);
 
 router
   .route("/user/delete/:_id")

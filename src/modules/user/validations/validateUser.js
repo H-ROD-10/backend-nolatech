@@ -2,6 +2,7 @@ import {
   deleteSchema,
   loginSchema,
   signupSchema,
+  updateMyUserSchema,
   updateRoleSchema,
 } from "./schema.js";
 
@@ -28,8 +29,18 @@ export const validateLogin = (req, res, next) => {
   next();
 };
 
-export const validateUpdateUser = (req, res, next) => {
+export const validateUpdateRoleUser = (req, res, next) => {
   const { error, value } = updateRoleSchema.validate(req.body);
+  if (error) {
+    const errorMessage = error.details[0].message;
+    res.status(400).send({ error: errorMessage });
+    return;
+  }
+  next();
+};
+
+export const validateMyUserUpdate = (req, res, next) => {
+  const { error, value } = updateMyUserSchema.validate(req.body);
   if (error) {
     const errorMessage = error.details[0].message;
     res.status(400).send({ error: errorMessage });

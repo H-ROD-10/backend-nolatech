@@ -17,6 +17,12 @@ export const updateRoleSchema = Joi.object({
   role: Joi.string().valid("user", "editor", "admin").required(),
 });
 
+export const updateMyUserSchema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(20),
+  email: Joi.string().email(),
+  password: Joi.string().min(8),
+});
+
 export const deleteSchema = Joi.object({
   _id: Joi.string().required(),
 });
