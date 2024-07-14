@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "Prueba Técnica Backend Autenticación Nolatech",
   "main": "index.js",
-  "keywords": [],
+  "keywords": ["backend", "nolatech"],
   "author": "Hector Rodriguez",
   "license": "ISC",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "set NODE_ENV=DEVELOPMENT && nodemon index.js",
-    "prod": "set NODE_ENV=PRODUCTION && node index.js",
+    "start": "set NODE_ENV=PRODUCTION && node index.js",
     "format": "npx @biomejs/biome format --write && npx @biomejs/biome lint --write && npx @biomejs/biome check"
   },
   "dependencies": {
