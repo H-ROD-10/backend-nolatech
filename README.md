@@ -54,7 +54,8 @@ La API REST expone los siguientes endpoints para la gestión de las colecciones:
 
 ## Documentación Detallada
 
-- [Swagger](http://localhost:8000/api/v1/docs/#/)
+- [Swagger Local](http://localhost:8000/api/v1/docs/#/)
+- [Swagger Web](https://prueba-tecnica-backend-nolatech.onrender.com/api/v1/docs/)
 
 ## Contribuciones
 

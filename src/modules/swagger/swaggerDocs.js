@@ -18,6 +18,7 @@ const options = {
     },
     servers: [
       { url: "http://localhost:8000/api/v1" }, // Adjust base URL if needed
+      { url: "https://prueba-tecnica-backend-nolatech.onrender.com/api/v1" },
     ],
   },
   apis: ["src/modules/user/routes/user.router.js"], // Path to your route handler files
