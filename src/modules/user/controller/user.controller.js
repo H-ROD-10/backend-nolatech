@@ -1,6 +1,6 @@
 import { userServices } from "../services/user.services.js";
 
-export const userController = {
+const userController = {
   signup: async (req, res, next) => {
     const { username, email, password, role } = req.body;
     return await userServices.signup(res, username, email, password, role);
@@ -18,6 +18,11 @@ export const userController = {
 
   getMyProfile: async (req, res, next) => {
     return await userServices.getMyProfile(res, req.user.id);
+  },
+
+  findByEmail: async (req, res, next) => {
+    const { email } = req.params;
+    return await userServices.findByEmail(email, res);
   },
 
   updateRoleUser: async (req, res, next) => {
@@ -44,3 +49,5 @@ export const userController = {
     return await userServices.logout(res);
   },
 };
+
+export { userController };

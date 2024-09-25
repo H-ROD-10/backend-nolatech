@@ -3,7 +3,7 @@ import { sendToken } from "../../../utils/sendToken.js";
 import { userRepository } from "../repository/user.repository.js";
 import bcrypt from "bcrypt";
 
-export const userServices = {
+const userServices = {
   signup: async (res, username, email, password, role) => {
     try {
       const saltRounds = 10;
@@ -18,7 +18,7 @@ export const userServices = {
       const { user } = await userRepository.signup(newUser);
 
       if (!user) {
-        return new ErrorHandler("Credenciales incorrectas", 400);
+        throw new ErrorHandler("Credenciales incorrectas", 400);
       }
 
       res.status(201).json({
@@ -40,7 +40,7 @@ export const userServices = {
       const verifyPassword = await bcrypt.compare(password, user.password);
 
       if (!verifyPassword || !user) {
-        return new ErrorHandler("Credenciales incorrectas", 401);
+        throw new ErrorHandler("Credenciales incorrectas", 401);
       }
 
       sendToken(user, 200, res);
@@ -56,13 +56,18 @@ export const userServices = {
   list: async (res, page, limit) => {
     try {
       const users = await userRepository.list(page, limit);
+
+      if (!users || users.length === 0) {
+        throw new ErrorHandler("No se encontraron usuarios", 400);
+      }
+
       res.status(200).json({
         success: true,
         message: "operacion exitosa",
         data: users,
       });
     } catch (error) {
-      res.status(401).json({
+      res.status(400).json({
         success: false,
         message: error.message,
         data: null,
@@ -75,13 +80,35 @@ export const userServices = {
       const { user } = await userRepository.findById(id);
 
       if (!user) {
-        return new ErrorHandler("Credenciales incorrectas", 400);
+        throw new ErrorHandler("Credenciales incorrectas", 400);
       }
       return {
         user,
       };
     } catch (error) {
       return new ErrorHandler(error.message, 400);
+    }
+  },
+
+  findByEmail: async (email, res) => {
+    try {
+      const { user } = await userRepository.findByEmail(email);
+
+      if (!user) {
+        throw new ErrorHandler("Usuario no encontrado", 400);
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "operacion exitosa",
+        data: user,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message,
+        data: null,
+      });
     }
   },
 
@@ -105,6 +132,11 @@ export const userServices = {
   updateRoleUser: async (res, _id, role) => {
     try {
       const user = await userRepository.updateRoleUser(_id, role);
+
+      if (!user) {
+        throw new ErrorHandler("No se encontro el usuario", 400);
+      }
+
       res.status(200).json({
         success: true,
         message: "Rol actualizado correctamente",
@@ -121,7 +153,21 @@ export const userServices = {
 
   updateUser: async (res, _id, username, email, password) => {
     try {
-      const user = await userRepository.update(_id, username, email, password);
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
+
+      const newUser = {
+        username,
+        email,
+        password: passwordHash,
+      };
+
+      const user = await userRepository.update(_id, newUser);
+
+      if (!user) {
+        throw new ErrorHandler("No se actualizó el usuario", 400);
+      }
+
       res.status(200).json({
         success: true,
         message: "Usuario actualizado correctamente",
@@ -172,3 +218,5 @@ export const userServices = {
     }
   },
 };
+
+export { userServices };

@@ -1,6 +1,6 @@
 import { User } from "../entity/user.entity.js";
 
-export const userRepository = {
+const userRepository = {
   signup: async (newUser) => {
     const { username, email, password, role, permissions } = newUser;
 
@@ -48,7 +48,9 @@ export const userRepository = {
       updateUser,
     };
   },
-  update: async (_id, username, email, password) => {
+  update: async (_id, newUser) => {
+    const { username, email, password } = newUser;
+
     const updateUser = await User.findByIdAndUpdate(
       { _id },
       { $set: { username, email, password } },
@@ -66,3 +68,5 @@ export const userRepository = {
     };
   },
 };
+
+export { userRepository };

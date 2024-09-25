@@ -1,5 +1,6 @@
 import {
   deleteSchema,
+  findByEmailSchema,
   loginSchema,
   signupSchema,
   updateMyUserSchema,
@@ -20,7 +21,7 @@ export const validateSignup = (req, res, next) => {
 
 export const validateLogin = (req, res, next) => {
   const { error, value } = loginSchema.validate(req.body);
-  console.log(error);
+
   if (error) {
     const errorMessage = error.details[0].message;
     res.status(400).send({ error: errorMessage });
@@ -51,6 +52,16 @@ export const validateMyUserUpdate = (req, res, next) => {
 
 export const validateDeleteUser = (req, res, next) => {
   const { error, value } = deleteSchema.validate(req.params);
+  if (error) {
+    const errorMessage = error.details[0].message;
+    res.status(400).send({ error: errorMessage });
+    return;
+  }
+  next();
+};
+
+export const validateFindByEmail = (req, res, next) => {
+  const { error, value } = findByEmailSchema.validate(req.params);
   if (error) {
     const errorMessage = error.details[0].message;
     res.status(400).send({ error: errorMessage });

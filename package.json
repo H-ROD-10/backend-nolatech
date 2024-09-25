@@ -1,9 +1,9 @@
 {
-  "name": "backend-nolatech",
+  "name": "backend-crud",
   "version": "1.0.0",
-  "description": "Prueba Técnica Backend Autenticación Nolatech",
+  "description": "Prueba Técnica Backend",
   "main": "index.js",
-  "keywords": ["backend", "nolatech"],
+  "keywords": ["backend", "crud"],
   "author": "Hector Rodriguez",
   "license": "ISC",
   "type": "module",

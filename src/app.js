@@ -5,7 +5,7 @@ import helmet from "helmet";
 import errorMidleware from "./middleware/error.js";
 
 // Import all routes
-import userRoute from "./modules/user/routes/user.router.js";
+import { userRoute } from "./modules/user/routes/user.router.js";
 import swaggerRoute from "./modules/swagger/routes/swagger.routes.js";
 
 const app = express();

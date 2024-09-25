@@ -232,6 +232,34 @@
  *                   role: admin
  *                   createdAt: 2022-10-11T14:20:09.000Z
  *                   createdUp: 2022-10-11T14:20:09.000Z
+ *   /user/{email}:
+ *     get:
+ *       summary: Get user by email
+ *       security:
+ *         - BearerAuth:
+ *            type: http
+ *            scheme: bearer
+ *       tags: [User]
+ *       parameters:
+ *         - in: path
+ *           name: email
+ *           type: string
+ *           required: true
+ *           description: The email of the user
+ *       responses:
+ *         200:
+ *           description: OK
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 example:
+ *                   _id: 123456
+ *                   username: alex
+ *                   email: VnI8k@example.com
+ *                   role: admin
+ *                   createdAt: 2022-10-11T14:20:09.000Z
+ *                   createdUp: 2022-10-11T14:20:09.000Z
  *   /user/update-my-user:
  *     patch:
  *       summary: Update my user
@@ -291,6 +319,7 @@ import { Router } from "express";
 import { userController } from "../controller/user.controller.js";
 import {
   validateDeleteUser,
+  validateFindByEmail,
   validateLogin,
   validateMyUserUpdate,
   validateSignup,
@@ -339,4 +368,10 @@ router
     userController.delete
   );
 
-export default router;
+router
+  .route("/user/:email")
+  .get(isAuthenticated, validateFindByEmail, userController.findByEmail);
+
+const userRoute = router;
+
+export { userRoute };

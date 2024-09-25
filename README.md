@@ -14,7 +14,7 @@ Este proyecto implementa una API REST que gestiona la colección de usuarios, en
 
 Clona el repositorio del proyecto en tu directorio local:
 
-- [git clone ](https://github.com/H-ROD-10/prueba-tecnica-backend-nolatech)
+- [git clone ](https://github.com/H-ROD-10/prueba-tecnica-crud)
 
 ## Instalación de Dependencias:
 
@@ -55,7 +55,7 @@ La API REST expone los siguientes endpoints para la gestión de las colecciones:
 ## Documentación Detallada
 
 - [Swagger Local](http://localhost:8000/api/v1/docs/#/)
-- [Swagger Web](https://prueba-tecnica-backend-nolatech.onrender.com/api/v1/docs/)
+- [Swagger Web]()
 
 ## Contribuciones
 

@@ -26,3 +26,7 @@ export const updateMyUserSchema = Joi.object({
 export const deleteSchema = Joi.object({
   _id: Joi.string().required(),
 });
+
+export const findByEmailSchema = Joi.object({
+  email: Joi.string().email().required(),
+});

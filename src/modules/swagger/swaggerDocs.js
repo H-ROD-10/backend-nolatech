@@ -4,7 +4,7 @@ const options = {
   swaggerDefinition: {
     openapi: "3.0.0", // OAS version
     info: {
-      title: "Nolatech API",
+      title: "Crud API",
       version: "1.0.0", // Your API version
       description: "API Prueba Técnica",
     },
@@ -18,7 +18,7 @@ const options = {
     },
     servers: [
       { url: "http://localhost:8000/api/v1" }, // Adjust base URL if needed
-      { url: "https://prueba-tecnica-backend-nolatech.onrender.com/api/v1" },
+      { url: "" },
     ],
   },
   apis: ["src/modules/user/routes/user.router.js"], // Path to your route handler files
